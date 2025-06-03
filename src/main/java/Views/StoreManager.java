@@ -41,6 +41,7 @@ public class StoreManager {
                 addStock_Interface(user);
                 break;
             case 5:
+            case 6:
                 System.out.println("Logging out...");
                 Authentication.ApplicationStartup(); // Redirect to log in
                 break;
