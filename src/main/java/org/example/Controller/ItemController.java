@@ -37,11 +37,11 @@ public class ItemController {
     }
     // In src/main/java/org/example/Controller/ItemController.java
 
-    public Item getItemById(String Code) throws SQLException, ClassNotFoundException {
+    public Item getItem_from_Code(String Code) throws SQLException, ClassNotFoundException {
+
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
         Item item = null;
 
         statement = connection.prepareStatement("select * from items where code = ?");

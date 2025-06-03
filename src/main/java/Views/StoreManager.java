@@ -21,6 +21,7 @@ public class StoreManager {
         System.out.println("1. View Items");
         System.out.println("2. Add Item");
         System.out.println("3. Update Item");
+        System.out.println("4. Add Stock");
         System.out.println("5. Logout");
 
         int choice = scanner.nextInt();
@@ -28,7 +29,7 @@ public class StoreManager {
 
         switch (choice) {
             case 1:
-                getItemById_Interface(user);
+
                 break;
 
             case 2:
@@ -38,7 +39,8 @@ public class StoreManager {
                 updateItem_Interface(user);
                 break;
             case 4:
-
+                addStock_Interface(user);
+                break;
             case 5:
                 System.out.println("Logging out...");
                 Authentication.ApplicationStartup(); // Redirect to log in
@@ -96,22 +98,9 @@ public class StoreManager {
 
     }
 
-    public void getItemById_Interface(User user) throws SQLException, ClassNotFoundException {
-        System.out.println("Enter the CODE of the item you want to retrieve:");
-        String code = scanner.nextLine();
 
-        Item item = new ItemController().getItemById(code);
-        if (item != null) {
-            System.out.println("Item found:");
-            System.out.println("ID: " + item.getId());
-            System.out.println("Code: " + item.getCode());
-            System.out.println("Name: " + item.getName());
-            System.out.println("Price: " + item.getPrice());
-        } else {
-            System.out.println("Item not found with code: " + code);
-        }
-        storeManagerDashboard(user);
-    }
+
+
 
     /**
      * Method to update an item through the interface.
@@ -138,6 +127,56 @@ public class StoreManager {
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Error updating item: " + e.getMessage());
+        }
+
+        storeManagerDashboard(user);
+    }
+
+    // In src/main/java/Views/StoreManager.java
+
+    public void addStock_Interface(User user) throws SQLException, ClassNotFoundException {
+        System.out.println("Enter Item Code:");
+        String code = scanner.nextLine();
+
+        Item item = new ItemController().getItem_from_Code(code);
+        if (item == null) {
+            System.out.println("Item not found with code: " + code);
+            storeManagerDashboard(user);
+            return;
+        }
+
+        System.out.println("Item found: " + item.getName() + " (Price: " + item.getPrice() + ")");
+        System.out.println("Confirm item? (yes/no):");
+        String confirm = scanner.nextLine();
+        if (!confirm.equalsIgnoreCase("yes") && !confirm.equalsIgnoreCase("y")) {
+            System.out.println("Cancelled.");
+            storeManagerDashboard(user);
+            return;
+        }
+
+        System.out.println("Enter stock quantity:");
+        int quantity = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Enter date of purchase (yyyy-mm-dd):");
+        String dopStr = scanner.nextLine();
+        java.sql.Date dateOfPurchase = java.sql.Date.valueOf(dopStr);
+
+        System.out.println("Enter date of expiry (yyyy-mm-dd):");
+        String doeStr = scanner.nextLine();
+        java.sql.Date dateOfExpiry = java.sql.Date.valueOf(doeStr);
+
+        System.out.println("Is the stock available? (true/false):");
+        boolean availability = scanner.nextBoolean();
+        scanner.nextLine();
+
+        org.example.Model.Stock stock = new org.example.Model.Stock(item, quantity, dateOfPurchase, dateOfExpiry, availability);
+
+        try {
+            new org.example.Controller.StockController().addStock(stock);
+            System.out.println("Stock added successfully ✅");
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Error adding stock: " + e.getMessage());
         }
 
         storeManagerDashboard(user);
