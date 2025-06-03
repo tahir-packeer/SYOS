@@ -22,15 +22,14 @@ public class StoreManager {
         System.out.println("2. Add Item");
         System.out.println("3. Update Item");
         System.out.println("4. Add Stock");
-        System.out.println("5. Logout");
+        System.out.println("5. Shelf Dashboard");
+        System.out.println("6. Logout");
 
         int choice = scanner.nextInt();
         scanner.nextLine(); // Consume newline
 
         switch (choice) {
             case 1:
-
-                break;
 
             case 2:
                     addItem_Interface(user);
@@ -99,9 +98,6 @@ public class StoreManager {
     }
 
 
-
-
-
     /**
      * Method to update an item through the interface.
      */
@@ -121,7 +117,7 @@ public class StoreManager {
         try {
             boolean success = new ItemController().UpdateItem(updatedItem);
             if (success) {
-                System.out.println("Item updated successfully ✅");
+                System.out.println("Item updated successfully ");
             } else {
                 System.out.println("Item update failed. Item code may not exist.");
             }
@@ -132,7 +128,6 @@ public class StoreManager {
         storeManagerDashboard(user);
     }
 
-    // In src/main/java/Views/StoreManager.java
 
     public void addStock_Interface(User user) throws SQLException, ClassNotFoundException {
         System.out.println("Enter Item Code:");
@@ -174,12 +169,16 @@ public class StoreManager {
 
         try {
             new org.example.Controller.StockController().addStock(stock);
-            System.out.println("Stock added successfully ✅");
+            System.out.println("Stock added successfully ");
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Error adding stock: " + e.getMessage());
         }
-
         storeManagerDashboard(user);
+    }
+
+    public  void ShelfDashboard(User user) {
+        System.out.println("Welcome to the Shelf Dashboard, " + user.getName() + "!");
+
     }
 
 }
