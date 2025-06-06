@@ -177,9 +177,13 @@ public class StoreManager {
         storeManagerDashboard(user);
     }
 
-    public  void ShelfDashboard(User user) {
-        System.out.println("Welcome to the Shelf Dashboard, " + user.getName() + "!");
 
-    }
+    //shelf interface
+    //view shelf stock
+    //restock item
+    //auto stock
+    //manual stock
+
+
 
 }
