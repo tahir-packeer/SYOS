@@ -58,6 +58,27 @@ public class ItemController {
         return item;
     }
 
+    public Item getItem_from_Id(int id) throws SQLException, ClassNotFoundException {
+
+        DatabaseConnection db = new DatabaseConnection();
+        Connection connection = db.connect();
+        PreparedStatement statement = null;
+        Item item = null;
+
+        statement = connection.prepareStatement("select * from items where id = ?");
+        statement.setInt(1, id);
+        ResultSet databaseResponse = statement.executeQuery();
+
+        if (databaseResponse.next()) {
+            item = new Item(databaseResponse.getString("code"), databaseResponse.getString("name"), databaseResponse.getDouble("price"));
+            item.setId(databaseResponse.getInt("id"));
+        } else {
+            System.out.println("Item with id " + id + " not found.");
+        }
+
+        return item;
+    }
+
     public boolean UpdateItem(Item item) throws SQLException, ClassNotFoundException {
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();

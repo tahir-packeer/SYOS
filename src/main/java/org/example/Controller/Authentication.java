@@ -8,11 +8,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Authentication {
 
-    public static void ApplicationStartup() throws SQLException, ClassNotFoundException {
+    public static void ApplicationStartup() throws SQLException, ClassNotFoundException, ParseException {
 
         Scanner input = new Scanner(System.in);
 

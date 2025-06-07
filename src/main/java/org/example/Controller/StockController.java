@@ -1,5 +1,3 @@
-// In src/main/java/org/example/Controller/StockController.java
-
 package org.example.Controller;
 
 import org.example.Database.DatabaseConnection;
@@ -47,6 +45,66 @@ public class StockController {
             System.out.println("No stock found for item: " + item.getName());
             return 0;
         }
+    }
 
+    public void reduce_stock_quantity_and_update_stock_shelf_table(Item item, int quantity, int shelf_id) throws SQLException, ClassNotFoundException {
+        DatabaseConnection db = new DatabaseConnection();
+        Connection connection = db.connect();
+
+        try{
+            connection.setAutoCommit(false);
+
+            int remainingQuantity = quantity;
+
+            PreparedStatement getStockQuery = connection.prepareStatement(
+                    "SELECT id, quantity FROM stock WHERE item_id = ? AND quantity > 0 ORDER BY date_of_expiry ASC"
+            );
+            getStockQuery.setInt(1, item.getId());
+            ResultSet stockOfItem = getStockQuery.executeQuery();
+
+            while (stockOfItem.next()) {
+                int stockId = stockOfItem.getInt("id");
+                int stockQuantity = stockOfItem.getInt("quantity");
+
+                int quantityToReduce = Math.min(remainingQuantity, stockQuantity);
+                PreparedStatement updateStockQuery = connection.prepareStatement(
+                        "UPDATE stock SET quantity = quantity - ? WHERE id = ?"
+                );
+                updateStockQuery.setInt(1, quantityToReduce);
+                updateStockQuery.setInt(2, stockId);
+                updateStockQuery.executeUpdate();
+                updateStockQuery.close();
+
+                PreparedStatement updateStockShelfQuery = connection.prepareStatement(
+                        "INSERT INTO shelf_stock (stock_id, shelf_id) VALUES (?, ?)"
+                );
+                updateStockShelfQuery.setInt(1, stockId);
+                updateStockShelfQuery.setInt(2, shelf_id);
+                updateStockShelfQuery.executeUpdate();
+                updateStockShelfQuery.close();
+
+                remainingQuantity -= quantityToReduce;
+            }
+
+            stockOfItem.close();
+            getStockQuery.close();
+
+            if (remainingQuantity == 0) {
+                connection.commit();
+                System.out.println("Stock transferred to shelf for item: " + item.getName());
+            } else {
+                connection.rollback();
+                System.out.println("Insufficient stock to transfer to shelf for item: " + item.getName());
+            }
+        }
+        catch (SQLException e)
+        {
+            connection.rollback();
+            throw e;
+        }
+        finally {
+            connection.setAutoCommit(true);
+            connection.close();
+        }
     }
 }
