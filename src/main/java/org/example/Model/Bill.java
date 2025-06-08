@@ -1,5 +1,7 @@
 package org.example.Model;
 
+import java.time.LocalDate;
+
 public class Bill {
     private int id;
     private Customer customer;
@@ -8,6 +10,7 @@ public class Bill {
     private double discount;
     private double cashTendered;
     private double changeAmount;
+    private LocalDate billDate;
 
     public Bill(Customer customer, String invoiceNumber, double fullPrice, double discount, double cashTendered, double changeAmount) {
         this.customer = customer;
@@ -16,6 +19,7 @@ public class Bill {
         this.discount = discount;
         this.cashTendered = cashTendered;
         this.changeAmount = changeAmount;
+        this.billDate = LocalDate.now();
     }
 
     public int getId() {
@@ -59,6 +63,13 @@ public class Bill {
     }
     public void setChangeAmount(double changeAmount) {
         this.changeAmount = changeAmount;
+    }
+
+    public LocalDate getBillDate() {
+        return billDate;
+    }
+    public void setBillDate(LocalDate billDate) {
+        this.billDate = billDate;
     }
 
 }

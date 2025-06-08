@@ -1,0 +1,16 @@
+========== Synex Outlet Store ==========
+Invoice No: INV-00003
+Bill Date: 2025-06-09
+Customer: Walk-in
+Date: 2025-06-09 15:03:26
+Cashier: Tahir
+----------------------------------------
+#     Item Name            Price      Qty        Total Price    
+----------------------------------------
+1     Eggs (10 pack)       400.00     2          800.00         
+----------------------------------------
+Total Bill Amount: 800.00
+Discount: 0.00
+Cash Tendered: 1000.00
+Change: 200.00
+========================================

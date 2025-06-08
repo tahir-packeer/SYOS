@@ -8,7 +8,25 @@ import java.sql.SQLException;
 
 public class CustomerController {
 
-    public Customer get_Customer_from_contactNumber
+    public void add_Customer(Customer customer)
+            throws SQLException, ClassNotFoundException
+    {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        Connection connection = databaseConnection.connect();
+
+        var statement = connection.prepareStatement("insert into customers(name, contactNumber) values(?, ?)");
+        statement.setString(1, customer.getName());
+        statement.setString(2, customer.getcontactNumber());
+
+        int rowsInserted = statement.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("Customer added successfully: " + customer.getName());
+        } else {
+            System.out.println("Failed to add customer: " + customer.getName());
+        }
+    }
+
+    public Customer get_Customer_by_contactNumber
             (String contactNumber)
             throws SQLException, ClassNotFoundException
     {
@@ -32,24 +50,6 @@ public class CustomerController {
             System.out.println("Customer with contact number " + contactNumber + " not found.");
 
             return customer;
-        }
-    }
-
-    public void add_Customer(Customer customer)
-            throws SQLException, ClassNotFoundException
-    {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        Connection connection = databaseConnection.connect();
-
-        var statement = connection.prepareStatement("insert into customers(name, contactNumber) values(?, ?)");
-        statement.setString(1, customer.getName());
-        statement.setString(2, customer.getcontactNumber());
-
-        int rowsInserted = statement.executeUpdate();
-        if (rowsInserted > 0) {
-            System.out.println("Customer added successfully: " + customer.getName());
-        } else {
-            System.out.println("Failed to add customer: " + customer.getName());
         }
     }
 }

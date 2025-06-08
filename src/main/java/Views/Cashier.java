@@ -1,14 +1,15 @@
 package Views;
 
+import org.example.Controller.Authentication;
 import org.example.Controller.BillController;
 import org.example.Controller.CustomerController;
 import org.example.Controller.ItemController;
 import org.example.Model.*;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Cashier {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void cashierInterface(User user) throws SQLException, ClassNotFoundException {
+    public void cashierInterface(User user) throws SQLException, ClassNotFoundException, ParseException {
         List<BillItem> itemsOfBill = new ArrayList<>();
         double billAmount = 0;
         Customer Customer = null;
@@ -81,7 +82,7 @@ public class Cashier {
         String customerPhone = scanner.nextLine();
 
         if (customerPhone.length() > 9) {
-            Customer customer = new CustomerController().get_Customer_from_contactNumber(customerPhone);
+            Customer customer = new CustomerController().get_Customer_by_contactNumber(customerPhone);
             if (customer == null) {
                 System.out.println("Customer not found. Please add the customer");
                 System.out.println("Enter Customer Name:");
@@ -129,6 +130,8 @@ public class Cashier {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             writer.write("========== Synex Outlet Store ==========\n");
             writer.write("Invoice No: " + finalBill.getInvoiceNumber() + "\n");
+            writer.write("Bill Date: " + finalBill.getBillDate() + "\n");
+
 
             if (finalBill.getCustomer() != null) {
                 writer.write("Customer Name: " + finalBill.getCustomer().getName() + "\n");
@@ -165,6 +168,18 @@ public class Cashier {
         } catch (IOException e) {
             System.out.println("Error writing bill to file: " + e.getMessage());
         }
+
+        scanner.nextLine();
+        System.out.println("\nDo you want to process another order? (yes/no):");
+        String continueProcessing = scanner.nextLine();
+
+        if (continueProcessing.equalsIgnoreCase("yes") || continueProcessing.equalsIgnoreCase("y")) {
+            cashierInterface(user);
+        } else {
+            System.out.println("Returning to login...");
+            Authentication.ApplicationStartup();
+        }
+
 
 
 

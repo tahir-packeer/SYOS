@@ -18,7 +18,7 @@ public class BillController {
              ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 int count = rs.getInt("total") + 1;
-                return String.format("INV-%05d", count); // e.g., INV-00001
+                return String.format("INV-%05d", count);
             }
         }
         return "INV00001";
@@ -28,18 +28,19 @@ public class BillController {
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();
         PreparedStatement statement = null;
-        String query = "INSERT INTO bill (customer_id, invoiceNumber, fullPrice, discount, cashTendered,changeAmount) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO bill (customer_id, invoiceNumber, fullPrice, discount, cashTendered,changeAmount,billDate) VALUES (?, ?, ?, ?, ?, ?,?)";
         statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         if (bill.getCustomer() != null) {
             statement.setInt(1, bill.getCustomer().getId());
         } else {
-            statement.setNull(1, java.sql.Types.INTEGER);
+            statement.setNull(1, Types.INTEGER);
         }
         statement.setString(2, bill.getInvoiceNumber());
         statement.setDouble(3, bill.getFullPrice());
         statement.setDouble(4, bill.getDiscount());
         statement.setDouble(5, bill.getCashTendered());
         statement.setDouble(6, bill.getChangeAmount());
+        statement.setObject(7, bill.getBillDate());
 
         int rowsInserted = statement.executeUpdate();
 
@@ -86,16 +87,9 @@ public class BillController {
             ShelfStatement.setInt(3, billItem.getQuantity());
             ShelfStatement.executeUpdate();
 
-
-
-
         }
-
         Billstatement.close();
         ShelfStatement.close();
-
-
-
     }
 
 }

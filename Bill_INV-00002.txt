@@ -1,0 +1,16 @@
+========== Synex Outlet Store ==========
+Invoice No: INV-00002
+Bill Date: 2025-06-10
+Customer: Walk-in
+Date: 2025-06-10 15:09:54
+Cashier: Tahir
+----------------------------------------
+#     Item Name            Price      Qty        Total Price    
+----------------------------------------
+1     Anchor Butter 250g   450.00     2          900.00         
+----------------------------------------
+Total Bill Amount: 800.00
+Discount: 100.00
+Cash Tendered: 1000.00
+Change: 200.00
+========================================
