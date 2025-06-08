@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import Views.Cashier;
 import Views.StoreManager;
 import org.example.Database.DatabaseConnection;
 import org.example.Model.User;
@@ -34,6 +35,8 @@ public class Authentication {
             String userType = user.getType();
             switch (userType.toLowerCase()) {
                 case "cashier":
+                    Cashier cashier = new Cashier();
+                    cashier.cashierInterface(user);
                     System.out.println("Welcome Cashier: " + user.getName());
                     break;
                 case "storemanager":
