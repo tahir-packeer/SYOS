@@ -14,6 +14,7 @@ public class StockController {
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();
         PreparedStatement statement = null;
+        // This method adds a new stock entry to the database
         try {
             String sql = "INSERT INTO stock (item_id, quantity, date_of_purchase, date_of_expiry, availabiity) VALUES (?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
@@ -52,6 +53,8 @@ public class StockController {
         Connection connection = db.connect();
 
         try{
+
+            // It reduces the stock quantity for a specific item and updates the shelf_stock table
             connection.setAutoCommit(false);
 
             int remainingQuantity = quantity;
@@ -62,6 +65,7 @@ public class StockController {
             getStockQuery.setInt(1, item.getId());
             ResultSet stockOfItem = getStockQuery.executeQuery();
 
+            // Iterate through the stock of the item and reduce the quantity
             while (stockOfItem.next()) {
                 int stockId = stockOfItem.getInt("id");
                 int stockQuantity = stockOfItem.getInt("quantity");

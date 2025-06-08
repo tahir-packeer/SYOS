@@ -25,15 +25,14 @@ public class ShelfController {
         statement.setInt(1, shelf.getItem().getId());
         statement.setInt(2, shelf.getQuantity());
         statement.setString(3, shelf.getType());
-        // Execute the statement
+        // Execute the statement to insert the shelf
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
 
             int shelfId = get_latest_added_shelf_id();
 
+            // If the shelf was added successfully, update the stock quantity and shelf_stock table
             new StockController().reduce_stock_quantity_and_update_stock_shelf_table(shelf.getItem(), shelf.getQuantity(), shelfId);
-
-
 
         } else {
             System.out.println("Failed to add shelf for item: " + shelf.getItem().getName());
@@ -109,6 +108,7 @@ public class ShelfController {
             stockStatement.setInt(1, shelf.getItem().getId());
             ResultSet stockResultSet = stockStatement.executeQuery();
 
+            //
             while (stockResultSet.next() && quantityToAdd > 0) {
                 int stockId = stockResultSet.getInt("id");
                 int stockQuantity = stockResultSet.getInt("quantity");

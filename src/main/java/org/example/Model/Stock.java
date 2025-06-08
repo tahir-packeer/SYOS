@@ -24,33 +24,43 @@ public class Stock {
     public void setId(int id) {
         this.id = id;
     }
+
     public Item getItem() {
         return item;
     }
+
     public void setItem(Item item) {
         this.item = item;
     }
+
     public int getQuantity() {
         return quantity;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
     public Date getDateOfPurchase() {
         return dateOfPurchase;
     }
+
     public void setDateOfPurchase(Date dateOfPurchase) {
         this.dateOfPurchase = dateOfPurchase;
     }
+
     public Date getDateOfExpiry() {
         return dateOfExpiry;
     }
+
     public void setDateOfExpiry(Date dateOfExpiry) {
         this.dateOfExpiry = dateOfExpiry;
     }
+
     public boolean isAvailability() {
         return availability;
     }
+
     public void setAvailability(boolean availability) {
         this.availability = availability;
     }

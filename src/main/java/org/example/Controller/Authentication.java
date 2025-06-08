@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import Views.Admin;
 import Views.Cashier;
 import Views.StoreManager;
 import org.example.Database.DatabaseConnection;
@@ -32,6 +33,7 @@ public class Authentication {
 
         if (user != null)
         {
+
             String userType = user.getType();
             switch (userType.toLowerCase()) {
                 case "cashier":
@@ -44,8 +46,10 @@ public class Authentication {
                     storeManager.storeManagerDashboard(user);
                     break;
                 case "manager":
-                    System.out.println("Welcome Manager: " + user.getName());
-                    break;
+                    //admin
+                    Admin admin = new Admin();
+                    admin.adminInterface(user);
+
                 default:
                     System.out.println("Unknown user type: " + userType);
             }
@@ -80,13 +84,11 @@ public class Authentication {
                 user = new User(id, name, password, type);
 
                 return user;
-
             }
             else
             {
                 System.out.println("Invalid username or password");
             }
-
         }
         catch (ClassNotFoundException e)
         {
@@ -96,7 +98,6 @@ public class Authentication {
         {
             System.out.println("Connection failed");
         }
-
         return null;
     }
 

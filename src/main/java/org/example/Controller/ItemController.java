@@ -16,6 +16,8 @@ public class ItemController {
         Connection connection = db.connect();
         PreparedStatement statement = null;
 
+        // Loop through the list of items and insert each one into the database
+
         for (Item item : items) {
             statement = connection.prepareStatement("insert into items(code, name, price) values(?,?,?)");
             statement.setString(1, item.getCode());
@@ -35,7 +37,7 @@ public class ItemController {
             db.closeConnection(connection);
         }
     }
-    // In src/main/java/org/example/Controller/ItemController.java
+
 
     public Item getItem_from_Code(String Code) throws SQLException, ClassNotFoundException {
 
@@ -65,6 +67,7 @@ public class ItemController {
         PreparedStatement statement = null;
         Item item = null;
 
+
         statement = connection.prepareStatement("select * from items where id = ?");
         statement.setInt(1, id);
         ResultSet databaseResponse = statement.executeQuery();
@@ -91,6 +94,7 @@ public class ItemController {
             statement.setString(1, item.getName());
             statement.setDouble(2, item.getPrice());
             statement.setString(3, item.getCode());
+
 
             int rowsUpdated = statement.executeUpdate();
             updated = rowsUpdated > 0;

@@ -142,6 +142,7 @@ public class ShelfView {
             (User user)
             throws SQLException, ClassNotFoundException, ParseException
     {
+        // Display shelves with low stock
         List<Shelf_Stock_Information> shelves = new ShelfController().get_Low_Shelf_With_Stock();
 
         System.out.printf("%-5s %-10s %-20s %-10s %-10s %-15s%n", "ID", "Item Code", "Item Name", "Shelf Qty", "Type", "Stock Qty");

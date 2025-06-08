@@ -36,6 +36,7 @@ public class Cashier {
                 break;
             }
 
+            // Fetch the item from the database using the item cod
             Item selectedItem = new ItemController().getItem_from_Code(itemCode);
 
             if (selectedItem != null) {
@@ -99,6 +100,8 @@ public class Cashier {
             return;
         }
 
+        // Fetch the customer from the database using the phone number
+
         String InvoiceNumber = new BillController().getInvoiceNumber();
 
         System.out.println("Your Total is: LKR." + billAmount);
@@ -119,12 +122,14 @@ public class Cashier {
                 balance
         );
 
+        // Set the bill date to the current date and time
         Bill finalBill = new BillController().Add_Bill(bill);
 
         new BillController().add_Bill_items(itemsOfBill, finalBill);
 
         System.out.println("Bill added successfully with ID: " + finalBill.getId());
 
+        // Export the bill to a text file
         String fileName = "Bill_" + finalBill.getInvoiceNumber() + ".txt";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {

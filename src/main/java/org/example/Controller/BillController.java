@@ -24,6 +24,8 @@ public class BillController {
         return "INV00001";
     }
 
+
+
     public Bill Add_Bill(Bill bill) throws SQLException, ClassNotFoundException {
         DatabaseConnection db = new DatabaseConnection();
         Connection connection = db.connect();
