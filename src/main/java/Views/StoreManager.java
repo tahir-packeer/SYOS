@@ -33,7 +33,9 @@ public class StoreManager {
 
         switch (choice) {
             case 1:
-
+                viewItems();
+                storeManagerDashboard(user);
+                break;
 
             case 2:
                 addItem_Interface(user);
@@ -56,7 +58,16 @@ public class StoreManager {
 
     public void viewItems() {
         // Logic to view items
-        System.out.println("Viewing items...");
+        System.out.println("Viewing items is not implemented yet.");List<Item> items = new ItemController().getAllItems();
+
+        if (items.isEmpty()) {
+            System.out.println("No items available.");
+        } else {
+            System.out.println("Available Items:");
+            for (Item item : items) {
+                System.out.println("Code: " + item.getCode() + ", Name: " + item.getName() + ", Price: " + item.getPrice());
+            }
+        }
     }
 
     public void addItem_Interface(User user) throws SQLException, ClassNotFoundException, ParseException {

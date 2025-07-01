@@ -20,8 +20,6 @@ public class ReportController {
                 "GROUP BY i.code, i.name " +
                 "ORDER BY total_revenue DESC";
 
-
-        // This is a prepared statement to prevent SQL injection and to set the date parameter
         try (var statement = connection.prepareStatement(query)) {
             statement.setString(1, date);
             var resultSet = statement.executeQuery();
@@ -30,14 +28,13 @@ public class ReportController {
             System.out.printf("%-10s %-20s %-15s %-15s%n", "Code", "Item Name", "Total Quantity", "Total Revenue");
             System.out.println("------------------------------------------------------------");
 
-
             while (resultSet.next()) {
                 String code = resultSet.getString("code");
                 String name = resultSet.getString("name");
                 int totalQuantity = resultSet.getInt("total_quantity");
                 double totalRevenue = resultSet.getDouble("total_revenue");
 
-                System.out.printf("%-10s %-20s %-15d Rs %-14.2f%n", code, name, totalQuantity, totalRevenue);
+                System.out.printf("%-10s %-20s %-15d $%-14.2f%n", code, name, totalQuantity, totalRevenue);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,7 +114,7 @@ public class ReportController {
         Connection connection = db.connect();
 
         String query = """
-            SELECT s.id AS stock_id, i.code AS item_code, i.name AS item_name, s.quantity AS stock_quantity, s.id
+            SELECT s.id AS stock_id, i.code AS item_code, i.name AS item_name, s.quantity AS stock_quantity
             FROM stock s
             JOIN items i ON s.item_id = i.id
             ORDER BY s.id ASC;
@@ -127,7 +124,7 @@ public class ReportController {
              var resultSet = statement.executeQuery()) {
 
             System.out.println("Stock Batch Report:");
-            System.out.printf("%-10s %-20s %-15s %-15s %-15s%n", "Stock ID", "Item Code", "Item Name", "Stock Quantity", "Batch Number");
+            System.out.printf("%-10s %-20s %-25s %-15s%n", "Stock ID", "Item Code", "Item Name", "Stock Quantity");
             System.out.println("------------------------------------------------------------");
 
             while (resultSet.next()) {
@@ -135,9 +132,9 @@ public class ReportController {
                 String itemCode = resultSet.getString("item_code");
                 String itemName = resultSet.getString("item_name");
                 int stockQuantity = resultSet.getInt("stock_quantity");
-                String batchNumber = resultSet.getString("batch_number");
 
-                System.out.printf("%-10d %-20s %-15s %-15d %-15s%n", stockId, itemCode, itemName, stockQuantity, batchNumber);
+
+                System.out.printf("%-10d %-20s %-25s %-15s%n", stockId, itemCode, itemName, stockQuantity);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -171,7 +168,7 @@ public class ReportController {
                 String billDate = resultSet.getString("billDate");
                 double totalAmount = resultSet.getDouble("total_amount");
 
-                System.out.printf("%-10d %-20s Rs %-14.2f%n", billId, billDate, totalAmount);
+                System.out.printf("%-10d %-20s Rs%-14.2f%n", billId, billDate, totalAmount);
             }
         } catch (SQLException e) {
             e.printStackTrace();

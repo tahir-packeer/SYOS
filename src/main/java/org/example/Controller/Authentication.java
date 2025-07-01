@@ -1,4 +1,4 @@
-package org.example.Controller;
+package org.example.Controller;     
 
 import Views.Admin;
 import Views.Cashier;
@@ -46,7 +46,6 @@ public class Authentication {
                     storeManager.storeManagerDashboard(user);
                     break;
                 case "manager":
-                    //admin
                     Admin admin = new Admin();
                     admin.adminInterface(user);
 

@@ -1,16 +1,16 @@
 ========== Synex Outlet Store ==========
 Invoice No: INV-00001
-Bill Date: 2025-06-09
+Bill Date: 2025-06-29
 Customer: Walk-in
-Date: 2025-06-09 15:07:17
+Date: 2025-06-29 15:08:12
 Cashier: Tahir
 ----------------------------------------
 #     Item Name            Price      Qty        Total Price    
 ----------------------------------------
-1     Ceylon Tea 400g      320.00     1          320.00         
+1     Ground Coffee (250g) 650.00     2          1300.00
 ----------------------------------------
-Total Bill Amount: 320.00
+Total Bill Amount: 1300.00
 Discount: 0.00
-Cash Tendered: 500.00
-Change: 180.00
+Cash Tendered: 1500.00
+Change: 200.00
 ========================================

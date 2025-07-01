@@ -51,19 +51,17 @@ public class Admin {
         }
     }
 
-
     private void generateDailySalesReport(User user) {
         System.out.print("Enter date (YYYY-MM-DD): ");
         String date = scanner.nextLine();
 
-
-        //methode to generate daily sales report
         ReportController reportController = new ReportController();
         try {
             String report = reportController.generate_sales_report(date);
         } catch (Exception e) {
             System.out.println("Error generating daily sales report: " + e.getMessage());
         }
+
 
         adminInterface(user);
 

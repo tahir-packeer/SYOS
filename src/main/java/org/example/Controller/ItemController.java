@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemController {
@@ -103,6 +104,30 @@ public class ItemController {
             if (connection != null) db.closeConnection(connection);
         }
         return updated;
+    }
+
+    public List<Item> getAllItems() {
+        DatabaseConnection db = new DatabaseConnection();
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Item> items = new ArrayList<>();
+
+        try {
+            connection = db.connect();
+            String sql = "SELECT * FROM items";
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Item item = new Item(resultSet.getString("code"), resultSet.getString("name"), resultSet.getDouble("price"));
+                item.setId(resultSet.getInt("id"));
+                items.add(item);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 }
 

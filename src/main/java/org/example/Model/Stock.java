@@ -18,6 +18,10 @@ public class Stock {
         this.dateOfExpiry = dateOfExpiry;
         this.availability = availability;
     }
+
+    public Stock(Item savedItem, int quantity, java.util.Date date) {
+    }
+
     public int getId() {
         return id;
     }
